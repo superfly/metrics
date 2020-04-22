@@ -112,10 +112,16 @@ impl Drain<String> for PrometheusObserver {
         let mut output: String = self.output.drain(..).collect();
 
         for (name, mut by_labels) in self.counters.drain() {
+            if !by_labels.iter().any(|(_, value)| *value > 0) {
+                continue;
+            }
             output.push_str("\n# TYPE ");
             output.push_str(name.as_str());
             output.push_str(" counter\n");
             for (labels, value) in by_labels.drain() {
+                if value == 0 {
+                    continue;
+                }
                 let full_name = render_labeled_name(&name, &labels);
                 output.push_str(full_name.as_str());
                 output.push_str(" ");
@@ -125,10 +131,16 @@ impl Drain<String> for PrometheusObserver {
         }
 
         for (name, mut by_labels) in self.gauges.drain() {
+            if !by_labels.iter().any(|(_, value)| *value > 0) {
+                continue;
+            }
             output.push_str("\n# TYPE ");
             output.push_str(name.as_str());
             output.push_str(" gauge\n");
             for (labels, value) in by_labels.drain() {
+                if value == 0 {
+                    continue;
+                }
                 let full_name = render_labeled_name(&name, &labels);
                 output.push_str(full_name.as_str());
                 output.push_str(" ");
@@ -138,12 +150,18 @@ impl Drain<String> for PrometheusObserver {
         }
 
         for (name, mut by_labels) in self.histos.drain() {
+            if !by_labels.iter().any(|(_, (sum, _))| *sum > 0) {
+                continue;
+            }
             output.push_str("\n# TYPE ");
             output.push_str(name.as_str());
             output.push_str(" summary\n");
 
             for (labels, sh) in by_labels.drain() {
                 let (sum, hist) = sh;
+                if sum == 0 {
+                    continue;
+                }
 
                 for quantile in &self.quantiles {
                     let value = hist.value_at_quantile(quantile.value());

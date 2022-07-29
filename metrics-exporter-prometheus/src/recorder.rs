@@ -51,6 +51,10 @@ impl Inner {
 
             let (name, labels) = key_to_parts(&key, Some(&self.global_labels));
             let value = f64::from_bits(gauge.get_inner().load(Ordering::Acquire));
+            if value == 0.0 {
+                self.registry.delete_gauge(&key);
+                continue;
+            }
             let entry =
                 gauges.entry(name).or_insert_with(HashMap::new).entry(labels).or_insert(0.0);
             *entry = value;

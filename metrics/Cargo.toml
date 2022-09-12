@@ -36,6 +36,6 @@ portable-atomic = "0.3"
 
 [dev-dependencies]
 log = "0.4"
-criterion = { version = "0.3", default-features = false, features = ["html_reports", "cargo_bench_support"] }
+criterion = { version = "0.4", default-features = false, features = ["html_reports", "cargo_bench_support"] }
 rand = "0.8"
 trybuild = "1"

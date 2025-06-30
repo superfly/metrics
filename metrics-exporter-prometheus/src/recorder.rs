@@ -53,6 +53,13 @@ impl Inner {
 
             let (name, labels) = key_to_parts(&key, Some(&self.global_labels));
             let value = f64::from_bits(gauge.get_inner().load(Ordering::Acquire));
+            if value == 0.0 {
+                // We are not sending zero gauges to Vicky as an optimization.
+                // They are eventually removed from in-memory registry if no longer written to.
+                // The last value that we send may not be 0, but it's Ok, as Grafana should
+                // treat NULL as zero.
+                continue;
+            }
             let entry =
                 gauges.entry(name).or_insert_with(HashMap::new).entry(labels).or_insert(0.0);
             *entry = value;

@@ -1095,14 +1095,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "metrics"
+version = "0.24.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25dea7ac8057892855ec285c440160265225438c3c45072613c25a4b26e98ef5"
+dependencies = [
+ "ahash",
+ "portable-atomic",
+]
+
+[[package]]
 name = "metrics-benchmark"
 version = "0.1.1-alpha.5"
 dependencies = [
  "getopts",
  "hdrhistogram",
  "log",
- "metrics",
- "metrics-util",
+ "metrics 0.24.2",
+ "metrics-util 0.20.0",
  "portable-atomic",
  "pretty_env_logger",
  "quanta",
@@ -1114,8 +1124,8 @@ version = "0.9.5"
 dependencies = [
  "bytes",
  "itoa",
- "metrics",
- "metrics-util",
+ "metrics 0.24.2",
+ "metrics-util 0.20.0",
  "proptest",
  "rand 0.9.0",
  "rand_xoshiro",
@@ -1136,8 +1146,8 @@ dependencies = [
  "hyper-util",
  "indexmap",
  "ipnet",
- "metrics",
- "metrics-util",
+ "metrics 0.24.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "metrics-util 0.20.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "proptest",
  "quanta",
  "rand 0.9.0",
@@ -1153,7 +1163,7 @@ version = "0.11.1"
 dependencies = [
  "bytes",
  "crossbeam-channel",
- "metrics",
+ "metrics 0.24.2",
  "mio",
  "prost",
  "prost-build",
@@ -1171,8 +1181,8 @@ dependencies = [
  "bytes",
  "chrono",
  "crossbeam-channel",
- "metrics",
- "metrics-util",
+ "metrics 0.24.2",
+ "metrics-util 0.20.0",
  "prost",
  "prost-build",
  "prost-types",
@@ -1188,8 +1198,8 @@ dependencies = [
  "itertools 0.13.0",
  "itoa",
  "lockfree-object-pool",
- "metrics",
- "metrics-util",
+ "metrics 0.24.2",
+ "metrics-util 0.20.0",
  "once_cell",
  "parking_lot",
  "tracing",
@@ -1212,7 +1222,7 @@ dependencies = [
  "hashbrown",
  "hdrhistogram",
  "indexmap",
- "metrics",
+ "metrics 0.24.2",
  "mockall",
  "ndarray",
  "ndarray-stats",
@@ -1230,6 +1240,22 @@ dependencies = [
  "sketches-ddsketch",
  "tracing",
  "tracing-subscriber",
+]
+
+[[package]]
+name = "metrics-util"
+version = "0.20.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fe8db7a05415d0f919ffb905afa37784f71901c9a773188876984b4f769ab986"
+dependencies = [
+ "crossbeam-epoch",
+ "crossbeam-utils",
+ "hashbrown",
+ "metrics 0.24.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quanta",
+ "rand 0.9.0",
+ "rand_xoshiro",
+ "sketches-ddsketch",
 ]
 
 [[package]]
